@@ -127,7 +127,7 @@ The syntax to query is a subset of MangoDB aggregation pipeline JSON with suppor
 
 1. $lookup: Joins another collection :.
   - "from" must refer to a model name listed in ref in the schema (if defined).
-  - "localField" must be a field path on the base colletion or a previous $lookup alias.
+  - "localField" must be a field path on the base collection or a previous $lookup alias.
   - "foreignField" must be "_id"
   - "as" defines an alias used in subsequent $match and $lookup stages as a prefix (e.g., alias.field).
 2. $match: Filter documents using comparison and logical operators.
@@ -527,9 +527,8 @@ class ModelQueryToolset(metaclass=ModelQueryToolsetMeta):
                                                     isinstance(f, (
                                                     CharField, TextField)) and f.concrete and not f.is_relation)
         else:
-            model_fields = cls.model._meta.get_fields()
-            cls._effective_text_search_fields = set(f for f in cls.fields if not model_fields[f].is_relation and
-                                                    isinstance(model_fields[f], (CharField, TextField)))
+            cls._effective_text_search_fields = set(f.name for f in cls.model._meta.get_fields() if f.name in cls.fields and
+                                                    isinstance(f, (CharField, TextField)) and f.concrete and not f.is_relation)
         if not cls._effective_text_search_fields:
             logger.debug(f"Full text search disabled for {cls.model}: no search fields resolved")
         else:

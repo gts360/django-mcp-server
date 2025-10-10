@@ -25,7 +25,6 @@ from .views import (
 
 class BirdQuery(ModelQueryToolset):
     model = Bird
-
     output_format = "csv"
     # output_as_resource = True # as of today milage with this may vary, claude supports it if it is not tool long, ADK fails to process the response ...
 

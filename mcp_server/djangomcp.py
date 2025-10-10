@@ -168,6 +168,17 @@ class DjangoMCP(FastMCP):
         self.stateless = stateless
         engine = import_module(settings.SESSION_ENGINE)
         self.SessionStore = engine.SessionStore
+        
+        # Optionally publish a tool that returns the global server instructions
+        if getattr(settings, "DJANGO_MCP_GET_SERVER_INSTRUCTIONS_TOOL", True):
+            async def _get_server_instructions():
+                return self._mcp_server.instructions or ""
+
+            self._tool_manager.add_tool(
+                fn=_get_server_instructions,
+                name="get_server_instructions",
+                description="Return MCP server instructions (if any). Always call first."
+            )
 
     @property
     def session_manager(self) -> StreamableHTTPSessionManager:

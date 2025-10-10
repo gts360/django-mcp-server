@@ -105,7 +105,6 @@ from mcp_server import MCPToolset
 from django.core.mail import send_mail
 
 class MyAITools(MCPToolset):
-    # This method will not be published as a tool because it starts with _
     def add(self, a: int, b: int) -> list[dict]:
         """A service to add two numbers together"""
         return a+b
@@ -123,6 +122,14 @@ class MyAITools(MCPToolset):
 ```
 
 ---
+
+### Verify with MCP Inspect
+
+Use the management commande mcp_inspect to ensure your tools are correctly declared : 
+
+```bash
+python manage.py mcp_inspect
+```
 
 ### Use the MCP with any MCP Client
 
@@ -463,7 +470,7 @@ Refer to this [list of clients](https://modelcontextprotocol.io/clients)
    - stateless : when set to 'True' the server will not manage sessions 
 
 - **DJANGO_MCP_AUTHENTICATION_CLASSES** (default to no authentication) a list of reference to Django Rest Framework authentication classes to enfors in the main MCP view.
-- **DJANGO_MCP_GET_SERVER_INSTRUCTIONS_TOOL** (default=True) if true a tool will be offered to obtain global instruction  and tools will instruct the agent o use it, as agents do not always have the MCP server glboal instructions incldued in their system prompt.
+- **DJANGO_MCP_GET_SERVER_INSTRUCTIONS_TOOL** (default=True) if true a tool will be offered to obtain global instruction and tools will instruct the agent to use it, as agents do not always have the MCP server global instructions included in their system prompt.
 - **DJANGO_MCP_ENDPOINT** (default="mcp") a string indicating the url endpoint used by the server. If you want it to have a trailing slash, for example, set it to "mcp/"
 
 ## Roadmap

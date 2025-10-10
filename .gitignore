@@ -178,3 +178,6 @@ contrib
 .idea
 
 .env
+
+# Claude local settings
+Claude.local.md

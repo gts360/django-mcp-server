@@ -1,6 +1,6 @@
 [project]
 name = "django-mcp-server"
-version = "0.5.5"
+version = "0.5.6"
 description = "Django MCP Server is a Django extensions to easily enable AI Agents to interact with Django Apps through the Model Context Protocol it works equally well on WSGI and ASGI"
 authors = [
     {name = "Omar BENHAMID",email = "omar.benhamid@smart-gts.com"}
