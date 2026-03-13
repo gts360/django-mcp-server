@@ -418,6 +418,27 @@ MCPServerStreamableHttpView.as_view(permission_classes=[IsAuthenticated], authen
 ...
 ```
 
+### Custom MCP Server Class
+
+You can create a custom MCP server class by subclassing `DjangoMCP` and configuring it in your settings:
+
+In your `mcp.py` or any module:
+```python
+from mcp_server.djangomcp import DjangoMCP
+
+class CustomMCPServer(DjangoMCP):
+    def register_drf_list_tool(self, ...):
+        # Custom tool registration
+        ...        
+```
+
+In `settings.py`:
+```python
+DJANGO_MCP_SERVER_CLASS = "yourapp.mcp.CustomMCPServer"
+```
+
+This allows you to customize the MCP server behavior for your specific needs.
+
 ## Testing
 
 ### The server
@@ -468,6 +489,8 @@ Refer to this [list of clients](https://modelcontextprotocol.io/clients)
    - name: a  name for the server
    - instructions: global instructions
    - stateless : when set to 'True' the server will not manage sessions 
+
+- **DJANGO_MCP_SERVER_CLASS** (default="mcp_server.djangomcp.DjangoMCP") a dotted path to a custom MCP server class. The class must be a subclass of `DjangoMCP`. This allows you to customize the MCP server behavior by creating your own subclass.
 
 - **DJANGO_MCP_AUTHENTICATION_CLASSES** (default to no authentication) a list of reference to Django Rest Framework authentication classes to enfors in the main MCP view.
 - **DJANGO_MCP_GET_SERVER_INSTRUCTIONS_TOOL** (default=True) if true a tool will be offered to obtain global instruction and tools will instruct the agent to use it, as agents do not always have the MCP server global instructions included in their system prompt.
