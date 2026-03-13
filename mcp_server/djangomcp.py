@@ -20,6 +20,8 @@ from rest_framework.serializers import Serializer
 from rest_framework.test import APIRequestFactory
 from starlette.datastructures import Headers
 from starlette.types import Scope, Receive, Send
+from django.utils.module_loading import import_string
+from django.core.exceptions import ImproperlyConfigured
 
 if TYPE_CHECKING:
     pass
@@ -386,7 +388,16 @@ class DjangoMCP(FastMCP):
         tool.fn = sync_to_async(_DRFDeleteAPIViewCallerTool(self, view_class, actions=actions))
 
 
-global_mcp_server = DjangoMCP(**getattr(settings, 'DJANGO_MCP_GLOBAL_SERVER_CONFIG', {}))
+_mcp_server_class = import_string(
+    getattr(settings, 'DJANGO_MCP_SERVER_CLASS', 'mcp_server.djangomcp.DjangoMCP')
+)
+
+if not issubclass(_mcp_server_class, DjangoMCP):
+    raise ImproperlyConfigured(
+        f"DJANGO_MCP_SERVER_CLASS must be a subclass of DjangoMCP, got {_mcp_server_class}"
+    )
+
+global_mcp_server = _mcp_server_class(**getattr(settings, 'DJANGO_MCP_GLOBAL_SERVER_CONFIG', {}))
 
 
 class ToolsetMeta(type):
