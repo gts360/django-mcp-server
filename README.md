@@ -1,6 +1,7 @@
 # Django MCP Server
 
 [![PyPI version](https://img.shields.io/pypi/v/django-mcp-server)](https://pypi.org/project/django-mcp-server/)
+[![AgentRank](https://agentrank-ai.com/api/badge/tool/gts360--django-mcp-server)](https://agentrank-ai.com/tool/gts360--django-mcp-server/)
 ![License](https://img.shields.io/pypi/l/django-mcp-server)
 [![Published on Django Packages](https://img.shields.io/badge/Published%20on-Django%20Packages-0c3c26)](https://djangopackages.org/packages/p/django-mcp-server/)
 ![Python versions](https://img.shields.io/pypi/pyversions/django-mcp-server)
