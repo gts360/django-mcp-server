@@ -385,6 +385,31 @@ class DjangoMCP(FastMCP):
         )
         tool.fn = sync_to_async(_DRFDeleteAPIViewCallerTool(self, view_class, actions=actions))
 
+    def register_drf_filter_tool(
+            self,
+            view_class: type("GenericAPIView"),
+            name: str | None = None,
+            instructions: str | None = None,
+            actions: dict | None = None,
+            max_limit: int = 50,
+    ):
+        """
+        Register a DRF ``ListModelMixin`` ViewSet as a filtered-list MCP tool.
+
+        Reads ``filterset_class`` (or ``filterset_fields``) from *view_class*
+        and exposes every declared filter as a typed, optional tool parameter.
+        Results are capped at *max_limit*.
+
+        Requires ``django-filter``.  See :mod:`mcp_server.drf_filter` for
+        implementation details.
+        """
+        from .drf_filter import register_drf_filter_tool
+        register_drf_filter_tool(
+            self, view_class,
+            name=name, instructions=instructions,
+            actions=actions, max_limit=max_limit,
+        )
+
 
 global_mcp_server = DjangoMCP(**getattr(settings, 'DJANGO_MCP_GLOBAL_SERVER_CONFIG', {}))
 
@@ -773,6 +798,49 @@ def drf_publish_destroy_mcp_tool(
             name=name,
             instructions=instructions,
             actions=actions,
+        )
+        return view_class
+
+    if args:
+        decorator(args[0])
+    else:
+        return decorator
+
+
+def drf_publish_filter_mcp_tool(
+        *args,
+        name: str | None = None,
+        instructions: str | None = None,
+        server: DjangoMCP | None = None,
+        actions: dict | None = None,
+        max_limit: int = 50,
+):
+    """
+    Function or Decorator to register a DRF ``ListModelMixin`` view as
+    a filtered-list MCP tool.
+
+    Every filter declared in the ViewSet's ``filterset_class`` (or
+    ``filterset_fields``) becomes an optional, typed tool parameter.
+    A ``limit`` parameter caps the result set.
+
+    Requires ``django-filter``.
+
+    :param name: Tool name; defaults to ``search_<model>``.
+    :param instructions: Description for MCP agents; falls back to the
+        ViewSet's docstring.
+    :param server: ``DjangoMCP`` instance; defaults to the global server.
+    :param actions: DRF action mapping (forward-compatibility).
+    :param max_limit: Hard cap on returned rows (default 50).
+    """
+    assert len(args) <= 1, "You must provide the DRF view or nothing as argument"
+
+    def decorator(view_class):
+        (server or global_mcp_server).register_drf_filter_tool(
+            view_class,
+            name=name,
+            instructions=instructions,
+            actions=actions,
+            max_limit=max_limit,
         )
         return view_class
 
