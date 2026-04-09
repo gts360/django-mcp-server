@@ -15,7 +15,7 @@
 ✅ Validated as a Remote Integration with Claude AI.<br/>
 🤖 Any MCP Client or AI Agent supporting MCP , (Google Agent Developement Kit, Claude AI, Claude Desktop ...) can interact with your application.
 
-Many thanks 🙏 to [all the contributor community](https://github.com/omarbenhamid/django-mcp-server/graphs/contributors)
+Many thanks 🙏 to [all the contributor community](https://github.com/gts360/django-mcp-server/graphs/contributors)
 
 Maintained ✨ with care by [Smart GTS software engineering](https://www.smart-gts.com/#contact).
 
@@ -42,7 +42,7 @@ pip install django-mcp-server
 Or directly from GitHub:
 
 ```bash
-pip install git+https://github.com/omarbenhamid/django-mcp-server.git
+pip install git+https://github.com/gts360/django-mcp-server.git
 ```
 
 ---
@@ -486,7 +486,7 @@ Refer to this [list of clients](https://modelcontextprotocol.io/clients)
 
 ## Issues
 
-If you encounter bugs or have feature requests, please open an issue on [GitHub Issues](https://github.com/omarbenhamid/django-mcp-server/issues).
+If you encounter bugs or have feature requests, please open an issue on [GitHub Issues](https://github.com/gts360/django-mcp-server/issues).
 
 ---
 

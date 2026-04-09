@@ -7,9 +7,9 @@ authors = [
 ]
 license = {text = "MIT"}
 readme = "README.md"
-homepage = "https://github.com/omarbenhamid/django-mcp-server"
-repository = "https://github.com/omarbenhamid/django-mcp-server"
-documentation = "https://github.com/omarbenhamid/django-mcp-server"
+homepage = "https://github.com/gts360/django-mcp-server"
+repository = "https://github.com/gts360/django-mcp-server"
+documentation = "https://github.com/gts360/django-mcp-server"
 keywords = ["django", "mcp", "model context protocol", "tools"]
 requires-python = ">=3.10"
 dependencies = [
@@ -19,13 +19,10 @@ dependencies = [
     "inflection (>=0.5.1,<0.6.0)",
     "uritemplate (>=4.1.1,<5.0.0)",
 ]
-classifiers = [
-    "Framework :: Django",
-    "Framework :: Django :: 4",
-    "Framework :: Django :: 5",
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-]
+[project.urls]
+Homepage = "https://github.com/gts360/django-mcp-server"
+Repository = "https://github.com/gts360/django-mcp-server"
+Issues = "https://github.com/gts360/django-mcp-server/issues"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
