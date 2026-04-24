@@ -13,7 +13,7 @@ documentation = "https://github.com/omarbenhamid/django-mcp-server"
 keywords = ["django", "mcp", "model context protocol", "tools"]
 requires-python = ">=3.10"
 dependencies = [
-    "mcp (>=1.8.0)",
+    "mcp (>=1.15.0)",
     "django (>=4.0)",
     "djangorestframework (>=3.15.0)",
     "inflection (>=0.5.1,<0.6.0)",

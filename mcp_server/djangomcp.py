@@ -15,6 +15,7 @@ from django.db.models import QuerySet
 from django.http import HttpResponse, HttpRequest
 from mcp.server import FastMCP
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+from mcp.types import Icon
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin, ListModelMixin
 from rest_framework.serializers import Serializer
 from rest_framework.test import APIRequestFactory
@@ -163,9 +164,9 @@ MCP_SESSION_ID_HDR = "Mcp-Session-Id"
 # Stuff pulled to support embedded server ?
 class DjangoMCP(FastMCP):
 
-    def __init__(self, name=None, instructions=None, stateless=False):
+    def __init__(self, name=None, instructions=None, stateless=False, icons: list[Icon] | None = None):
         # Prevent extra server settings as we do not use the embedded server
-        super().__init__(name or "django_mcp_server", instructions)
+        super().__init__(name or "django_mcp_server", instructions, icons=icons)
         self.stateless = stateless
         engine = import_module(settings.SESSION_ENGINE)
         self.SessionStore = engine.SessionStore
