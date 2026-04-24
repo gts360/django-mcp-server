@@ -1,8 +1,10 @@
 from django.db.models import Q
 from django.test import TestCase
+from mcp.types import Icon
 
 from .models import Bird, Location, City
 from mcp_server import query_tool
+from mcp_server.djangomcp import DjangoMCP
 
 
 class JSONQueryTest(TestCase):
@@ -353,3 +355,16 @@ class JSONQueryTest(TestCase):
         self.assertEqual(3, row["min_count"])
         self.assertEqual(2, row["count"] )
         self.assertEqual(4, row["average"])
+
+
+class DjangoMCPIconsTest(TestCase):
+    """Regression tests for the icons argument forwarded to FastMCP (issue #58)."""
+
+    def test_icons_default_is_none(self):
+        server = DjangoMCP(name="icons-default")
+        self.assertIsNone(server._mcp_server.icons)
+
+    def test_icons_forwarded_to_fastmcp(self):
+        icons = [Icon(src="https://example.com/icon.png", mimeType="image/png", sizes=["64x64"])]
+        server = DjangoMCP(name="icons-forwarded", icons=icons)
+        self.assertEqual(server._mcp_server.icons, icons)

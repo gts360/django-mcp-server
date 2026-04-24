@@ -317,10 +317,15 @@ async def increment_species(name: str, amount: int = 1) -> int:
 In `settings.py` you can initialize the `DJANGO_MCP_GLOBAL_SERVER_CONFIG` parameter. These will be 
 passed to the `MCPServer` server during initialization
 ```python
+from mcp.types import Icon
+
 DJANGO_MCP_GLOBAL_SERVER_CONFIG = {
     "name":"mymcp",
     "instructions": "Some instructions to use this server",
-    "stateless": False
+    "stateless": False,
+    "icons": [
+        Icon(src="https://example.com/icon.png", mimeType="image/png", sizes=["64x64"]),
+    ],
 }
 ```
 
@@ -467,7 +472,8 @@ Refer to this [list of clients](https://modelcontextprotocol.io/clients)
 - **DJANGO_MCP_GLOBAL_SERVER_CONFIG** a configuration dictionnary for the global MCP server default to empty. It can include the following parmaters
    - name: a  name for the server
    - instructions: global instructions
-   - stateless : when set to 'True' the server will not manage sessions 
+   - stateless : when set to 'True' the server will not manage sessions
+   - icons: optional list of `mcp.types.Icon` instances advertised to clients (e.g. shown by Claude Desktop next to the server name). Requires `mcp >= 1.15.0`.
 
 - **DJANGO_MCP_AUTHENTICATION_CLASSES** (default to no authentication) a list of reference to Django Rest Framework authentication classes to enfors in the main MCP view.
 - **DJANGO_MCP_GET_SERVER_INSTRUCTIONS_TOOL** (default=True) if true a tool will be offered to obtain global instruction and tools will instruct the agent to use it, as agents do not always have the MCP server global instructions included in their system prompt.
