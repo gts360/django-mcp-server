@@ -13,7 +13,7 @@
 🚀 Convert Django Rest Framework APIs to MCP tools with one annotation.<br/>
 ✅ Working on both WSGI and ASGI without infrastructure change.<br/>
 ✅ Validated as a Remote Integration with Claude AI.<br/>
-🤖 Any MCP Client or AI Agent supporting MCP , (Google Agent Developement Kit, Claude AI, Claude Desktop ...) can interact with your application.
+🤖 Any MCP Client or AI Agent supporting MCP , (Google Agent Development Kit, Claude AI, Claude Desktop ...) can interact with your application.
 
 Many thanks 🙏 to [all the contributor community](https://github.com/omarbenhamid/django-mcp-server/graphs/contributors)
 
@@ -433,13 +433,13 @@ There are many ways to test :
 
 1. Using the test [MCP Client script : test/test_mcp_client.py](test/test_mcp_client.py)  
 2. You can test using [MCP Inspector tool](https://github.com/modelcontextprotocol/inspector) 
-3. or any compatible MCP Client like google agent developement kit.
+3. or any compatible MCP Client like google agent development kit.
 
 ---
 
 ## Integration with Agentic Frameworks and MCP Clients
 
-### Google Agent Developement Kit Example
+### Google Agent Development Kit Example
 
 **NOTE** as of today the [official google adk does not support StreamableHTTP Transport](https://github.com/google/adk-python/issues/479) 
 but you could use [this fork](https://github.com/omarbenhamid/google-adk-python)
