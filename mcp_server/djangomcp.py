@@ -13,7 +13,7 @@ from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import QuerySet
 from django.http import HttpResponse, HttpRequest
-from mcp.server import FastMCP
+from mcp.server import MCPServer
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin, ListModelMixin
 from rest_framework.serializers import Serializer
@@ -161,11 +161,12 @@ MCP_SESSION_ID_HDR = "Mcp-Session-Id"
 
 # FIXME: shall I reimplement the necessary without the
 # Stuff pulled to support embedded server ?
-class DjangoMCP(FastMCP):
+class DjangoMCP(MCPServer):
 
     def __init__(self, name=None, instructions=None, stateless=False):
         # Prevent extra server settings as we do not use the embedded server
-        super().__init__(name or "django_mcp_server", instructions)
+        # instructions must be keyword-only: in mcp 2.x the second positional is title
+        super().__init__(name or "django_mcp_server", instructions=instructions)
         self.stateless = stateless
         engine = import_module(settings.SESSION_ENGINE)
         self.SessionStore = engine.SessionStore
@@ -173,7 +174,7 @@ class DjangoMCP(FastMCP):
         # Optionally publish a tool that returns the global server instructions
         if getattr(settings, "DJANGO_MCP_GET_SERVER_INSTRUCTIONS_TOOL", True):
             async def _get_server_instructions():
-                return self._mcp_server.instructions or ""
+                return self._lowlevel_server.instructions or ""
 
             self._tool_manager.add_tool(
                 fn=_get_server_instructions,
@@ -184,8 +185,8 @@ class DjangoMCP(FastMCP):
     @property
     def session_manager(self) -> StreamableHTTPSessionManager:
         return StreamableHTTPSessionManager(
-            app=self._mcp_server,
-            event_store=self._event_store,
+            app=self._lowlevel_server,
+            event_store=None,
             json_response=True,
             stateless=True,  # Sessions will be managed as Django sessions.
         )
@@ -231,12 +232,12 @@ class DjangoMCP(FastMCP):
         Append instructions to the server instructions.
         This method is called by the Django view when a request is received.
         """
-        inst = self._mcp_server.instructions
+        inst = self._lowlevel_server.instructions
         if not inst:
             inst = new_instructions
         else:
             inst = inst.strip() + "\n\n" + new_instructions.strip()
-        self._mcp_server.instructions = inst
+        self._lowlevel_server.instructions = inst
 
     def register_mcptoolset(self, toolset):
         return toolset._add_tools_to(self._tool_manager)
