@@ -1,13 +1,10 @@
 from typing import Any
 import httpx
-from mcp.server import Server
-from mcp.server.fastmcp import FastMCP
+from mcp.server import MCPServer
 
 
-# Initialize FastMCP server
-mcp = FastMCP("weather")
-
-Server
+# Initialize MCPServer
+mcp = MCPServer("weather")
 
 # Constants
 NWS_API_BASE = "https://api.weather.gov"
@@ -96,8 +93,6 @@ Forecast: {period['detailedForecast']}
 
 if __name__ == "__main__":
     # Initialize and run the server
-    #mcp.run(transport='sse')
+    # mcp.run(transport='sse')
     # mcp.run(transport='stdio')
-    mcp.settings.port = 8002
-    mcp.settings.json_response = True
-    mcp.run(transport='streamable-http')
+    mcp.run(transport='streamable-http', port=8002, json_response=True)

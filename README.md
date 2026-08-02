@@ -143,16 +143,15 @@ authorization through : DJANGO_MCP_AUTHENTICATION_CLASSES
 You can test it with the python mcp SDK :
 
 ```python
-from mcp.client.streamable_http import streamablehttp_client
+from mcp.client.streamable_http import streamable_http_client
 from mcp import ClientSession
 
 
 async def main():
     # Connect to a streamable HTTP server
-    async with streamablehttp_client("http://localhost:8000/mcp") as (
+    async with streamable_http_client("http://localhost:8000/mcp") as (
         read_stream,
         write_stream,
-        _,
     ):
         # Create a session using the client streams
         async with ClientSession(read_stream, write_stream) as session:
@@ -278,7 +277,7 @@ class MyTools(MCPToolset):
 
 ### Use low level mcp server annotation
 
-You can import the DjangoMCP server instance and use FastMCP annotations to declare
+You can import the DjangoMCP server instance and use MCPServer annotations to declare
 mcp tools and resources :
 
 ```python

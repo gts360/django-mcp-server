@@ -613,7 +613,7 @@ class _QueryExecutor:
                     type="resource",
                     resource=TextResourceContents(
                         uri=f"resource://query_result/{renderer.format}",
-                        mimeType=renderer.media_type,
+                        mime_type=renderer.media_type,
                         text=ret
                     )
                 )]
@@ -622,7 +622,7 @@ class _QueryExecutor:
                     type="resource",
                     resource=BlobResourceContents(
                         uri=f"resource://query_result/{renderer.format}",
-                        mimeType=renderer.media_type,
+                        mime_type=renderer.media_type,
                         blob=base64.b64encode(ret).decode('utf-8')
                     )
                 )]

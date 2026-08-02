@@ -1,6 +1,6 @@
 [project]
 name = "django-mcp-server"
-version = "0.5.6"
+version = "0.6.0"
 description = "Django MCP Server is a Django extensions to easily enable AI Agents to interact with Django Apps through the Model Context Protocol it works equally well on WSGI and ASGI"
 authors = [
     {name = "Omar BENHAMID",email = "omar.benhamid@smart-gts.com"}
@@ -13,7 +13,7 @@ documentation = "https://github.com/omarbenhamid/django-mcp-server"
 keywords = ["django", "mcp", "model context protocol", "tools"]
 requires-python = ">=3.10"
 dependencies = [
-    "mcp (>=1.8.0)",
+    "mcp (>=2.0.0,<3)",
     "django (>=4.0)",
     "djangorestframework (>=3.15.0)",
     "inflection (>=0.5.1,<0.6.0)",

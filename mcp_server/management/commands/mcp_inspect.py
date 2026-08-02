@@ -17,10 +17,10 @@ async def _check_client():
     svr_wr, cl_rd = anyio.create_memory_object_stream(0)
 
     async def run_server():
-        await mcp_server._mcp_server.run(
+        await mcp_server._lowlevel_server.run(
             svr_rd,
             svr_wr,
-            mcp_server._mcp_server.create_initialization_options(),
+            mcp_server._lowlevel_server.create_initialization_options(),
         )
 
     async def run_client():
@@ -31,7 +31,7 @@ async def _check_client():
             tool_list = await session.list_tools()
             for tool in tool_list.tools:
                 print(f'\n\t{tool.name}: {tool.description}')
-                print(f'\tParameters: {tool.inputSchema}')
+                print(f'\tParameters: {tool.input_schema}')
 
             print("Resources discovered in server:")
             resource_list = await session.list_resources()

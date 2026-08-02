@@ -1,13 +1,12 @@
-from mcp.client.streamable_http import streamablehttp_client
+from mcp.client.streamable_http import streamable_http_client
 from mcp import ClientSession
 
 
 async def main():
     # Connect to a streamable HTTP server
-    async with streamablehttp_client("http://localhost:8000/mcpunsecured") as (
+    async with streamable_http_client("http://localhost:8000/mcpunsecured") as (
         read_stream,
         write_stream,
-        _,
     ):
         # Create a session using the client streams
         async with ClientSession(read_stream, write_stream) as session:
